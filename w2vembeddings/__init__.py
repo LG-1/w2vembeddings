@@ -1,2 +1,4 @@
 __version__ = '0.1.0'
-from tencentemb.tencent import TencentEmbedding
+from w2vembeddings.embedding import Embedding
+from w2vembeddings.w2vemb import EMB
+from w2vembeddings.managedb import ManageDB

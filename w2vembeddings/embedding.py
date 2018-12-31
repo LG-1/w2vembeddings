@@ -8,8 +8,7 @@ from io import StringIO
 
 class Embedding:
 
-    @staticmethod
-    def path(p):
+    def path(self, p):
         """
 
         Args:
@@ -19,58 +18,11 @@ class Embedding:
             str: absolute path to the file, located in the ``$EMBEDDINGS_ROOT`` directory.
 
         """
-        root = environ.get('EMBEDDINGS_ROOT', path.join(environ['HOME'], '.embeddings'))
+        root = self.root_path()
         return path.join(path.abspath(root), p)
 
-    @staticmethod
-    def download_file(url, local_filename):
-        """
-        Downloads a file from an url to a local file.
-
-        Args:
-            url (str): url to download from.
-            local_filename (str): local file to download to.
-
-        Returns:
-            str: file name of the downloaded file.
-
-        """
-        r = requests.get(url, stream=True)
-        if path.dirname(local_filename) and not path.isdir(path.dirname(local_filename)):
-            raise Exception(local_filename)
-            makedirs(path.dirname(local_filename))
-        with open(local_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                if chunk:
-                    f.write(chunk)
-        return local_filename
-
-    @staticmethod
-    def ensure_file(name, url=None, force=False, logger=logging.getLogger(), postprocess=None):
-        """
-        Ensures that the file requested exists in the cache, downloading it if it does not exist.
-
-        Args:
-            name (str): name of the file.
-            url (str): url to download the file from, if it doesn't exist.
-            force (bool): whether to force the download, regardless of the existence of the file.
-            logger (logging.Logger): logger to log results.
-            postprocess (function): a function that, if given, will be applied after the file is downloaded. The function has the signature ``f(fname)``
-
-        Returns:
-            str: file name of the downloaded file.
-
-        """
-        fname = Embedding.path(name)
-        if not path.isfile(fname) or force:
-            if url:
-                logger.critical('Downloading from {} to {}'.format(url, fname))
-                Embedding.download_file(url, fname)
-                if postprocess:
-                    postprocess(fname)
-            else:
-                raise Exception('{} does not exist!'.format(fname))
-        return fname
+    def root_path(self):
+        return environ.get('EMBEDDINGS_ROOT', path.join(environ['HOME'], '.embeddings'))
 
     @staticmethod
     def initialize_db(fname):
@@ -117,7 +69,7 @@ class Embedding:
         self.db.commit()
         return q.fetchone()[0]
 
-    def insert_batch(self, batch):
+    def insert_batch(self, db, batch):
         """
 
         Args:
@@ -135,11 +87,11 @@ class Embedding:
                 ('!', [3, 4, 5]),
             ])
         """
-        c = self.db.cursor()
+        c = db.cursor()
         binarized = [(word, array('f', emb).tobytes()) for word, emb in batch]
         try:
             c.executemany("insert into embeddings values (?, ?)", binarized)
-            self.db.commit()
+            db.commit()
         except Exception as e:
             print('insert failed\n{}'.format([w for w, e in batch]))
             raise e

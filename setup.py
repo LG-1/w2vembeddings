@@ -9,7 +9,7 @@ setup(
     version='0.1.0',
 
     # The project's main homepage.
-    url='https://github.com/lg-1/tencent-embedding',
+    url='https://github.com/lg-1/w2vembeddings',
 
     # Author details
     author='LG',
