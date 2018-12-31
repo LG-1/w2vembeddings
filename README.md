@@ -1,1 +1,1 @@
-# tencentemb
+# w2vembeddings

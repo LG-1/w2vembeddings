@@ -14,13 +14,13 @@ class TencentEmbedding(Embedding):
     Reference: http://nlp.stanford.edu/projects/glove
     """
 
-    Setting = namedtuple('Setting', ['url', 'd_embs', 'size', 'description'])
+    Setting = namedtuple('Setting', ['d_embs', 'size', 'description'])
     settings = {
-        'test': Setting(os.getcwd()+'/data/test_corpos.txt',
-                           [20], 8, 'A corpus for test')
+        'test': Setting([20], 8, 'A corpus for test')
     }
 
-    def __init__(self, name='test', d_emb=20, default='none'):
+    def __init__(self, name='test', d_emb=20, default='none',
+                 url=None):
         """
 
         :param name: name of the embedding to retrieve.
@@ -36,6 +36,7 @@ class TencentEmbedding(Embedding):
         self.name = name
         self.db = self.initialize_db(self.path(path.join('tencent', '{}:{}.db'.format(name, d_emb))))
         self.default = default
+        self.url = url
 
         if len(self) < self.setting.size:
             self.clear()
@@ -55,7 +56,7 @@ class TencentEmbedding(Embedding):
     def load_word2emb(self, batch_size=1000):
         seen = set()
 
-        with open(self.setting.url, 'r') as fin:
+        with open(self.url, 'r') as fin:
             batch = []
             for i, line in tqdm(enumerate(fin), total=self.setting.size):
                 if i == 0:

@@ -5,7 +5,7 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 setup(
-    name='tencentemb',
+    name='w2vembeddings',
     version='0.1.0',
 
     # The project's main homepage.
