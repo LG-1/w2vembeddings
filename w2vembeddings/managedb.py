@@ -8,6 +8,15 @@ import shutil
 class ManageDB(Embedding):
 
     def add_file2db(self, name, file_path, dimensions, size, description='file to sqlite3 db'):
+        """
+        this function is for insert txt embs file into sqlite3 db.
+        :param name: db name
+        :param file_path: txt file path
+        :param dimensions: vector dimensions
+        :param size: embeddings size
+        :param description: description
+        :return: None
+        """
         db_path = self.path(path.join(name, '{}:{}.db'.format(name, dimensions)))
         db = self.initialize_db(db_path)
 
