@@ -14,7 +14,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='w2vembeddings',
-    version='0.1.0',
+    version='0.1.1',
     description='This package is main for translate word into vector for nlp embedding. '
                 'maybe chinese maybe english, any language you want to use is ok.  '
                 'This is main for those who will use word2vec in local from txt files. '
