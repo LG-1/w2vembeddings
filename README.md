@@ -6,6 +6,8 @@ This is main for those who will use word2vec in local from txt files,will help t
 
 It's a efficient way for researcher to reuse in their scenes.
 
+this project reference [embeddings](https://github.com/vzhong/embeddings)
+
 ## insatll
 ### github
 ``` bash
