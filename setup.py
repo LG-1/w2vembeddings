@@ -1,12 +1,25 @@
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import unittest
+
+
+def w2vembeddings_test_suite():
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('test')
+    return test_suite
+
 
 here = path.abspath(path.dirname(__file__))
 
 setup(
     name='w2vembeddings',
     version='0.1.0',
+    description='This package is main for translate word into vector for nlp embedding. '
+                'maybe chinese maybe english, any language you want to use is ok.  '
+                'This is main for those who will use word2vec in local from txt files. '
+                'In particular, this implementation primarily helps to construct a separate'
+                ' word vector matrix for embedding in local NLP tasks. ',
 
     # The project's main homepage.
     url='https://github.com/lg-1/w2vembeddings',
@@ -76,4 +89,5 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
     },
+    test_suite="setup.w2vembeddings_test_suite"
 )

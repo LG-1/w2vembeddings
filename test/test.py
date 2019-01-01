@@ -14,7 +14,7 @@ class Test_EMB(unittest.TestCase):
 
     def test_EMB(self):
         from time import time
-        self.md.add_file2db('test2', 'data/test_corpos.txt', 20, 8)
+        # self.md.add_file2db('test2', 'data/test_corpos.txt', 20, 8)
         emb = EMB(name='test', dimensions=10)
         for w in ['的', '哈哈哈', 'vancouver', 'toronto']:
             start = time()

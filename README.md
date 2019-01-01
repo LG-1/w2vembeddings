@@ -10,13 +10,15 @@ this project reference [embeddings](https://github.com/vzhong/embeddings)
 
 ## insatll
 ### github
+### pip (recommend)
+``` bash
+pip install w2vembeddings
+``` 
 ``` bash
 git clone https://github.com/LG-1/w2vembeddings.git
 cd w2vembeddings
 python setup.py install
 ``` 
-### pip
-
 
 ## init and manage emb db
 ```python
